@@ -1,0 +1,5 @@
+# STM32 Project - Git Ignore
+
+# STM32CubeIDE Build Outputs
+.settings/
+Debug/
