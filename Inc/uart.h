@@ -12,12 +12,13 @@
 #include "stdbool.h"
 
 // Buffer structure
-typedef struct {
-	uint8_t *buffer;
-	uint16_t size;
-	volatile uint16_t head;
-	volatile uint16_t tail;
-	volatile uint16_t count;
+typedef struct
+{
+  uint8_t *buffer;
+  uint16_t size;
+  volatile uint16_t head;
+  volatile uint16_t tail;
+  volatile uint16_t count;
 } USART1_Buffer_t;
 
 /* External declarations */
@@ -26,8 +27,7 @@ extern volatile USART1_Buffer_t usart1_tx_buf;
 
 // Function declarations
 void USART1_Init(void);
-void UART1_BufferInit(volatile USART1_Buffer_t *buff, uint8_t *storage,
-		uint16_t size);
+void UART1_BufferInit(volatile USART1_Buffer_t *buff, uint8_t *storage, uint16_t size);
 
 // ONE set of buffer functions that work with ANY buffer (using pointers)
 bool USART1_BufferEmpty(volatile USART1_Buffer_t *buff);

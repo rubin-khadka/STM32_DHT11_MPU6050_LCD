@@ -10,24 +10,42 @@
 
 void TIMER2_Init(void)
 {
-    // Enable TIM2 clock
-    RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
+  // Enable TIM2 clock
+  RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
 
-    // Configure for 1ms resolution at 72MHz
-    TIM2->PSC = 72000 - 1;  // Prescaler = 71999
-    TIM2->ARR = 0xFFFFFFFF;  // 32-bit max (no overflow)
+  // Small delay for clock to stabilize
+  for(volatile int i = 0; i < 10; i++);
 
-    // Disable interrupt
-    TIM2->DIER &= ~TIM_DIER_UIE;
+  // Configure for 1ms resolution at 72MHz
+  TIM2->PSC = 7200 - 1;  // Prescaler = 71999
 
-    // Start timer
-    TIM2->CR1 |= TIM_CR1_CEN;
+  // Disable interrupt
+  TIM2->DIER &= ~TIM_DIER_UIE;
+
+  // Start timer
+  TIM2->CR1 |= TIM_CR1_CEN;
 }
 
-void TIMER2_Delay_ms(uint32_t ms)
+void TIMER2_Delay_ms(uint16_t ms)
 {
-    uint32_t start = TIM2->CNT;
+  // Stop timer if running
+  TIM2->CR1 &= ~TIM_CR1_CEN;
 
-    // Wait for desired milliseconds
-    while((TIM2->CNT - start) < ms);
+  // Set auto-reload value
+  TIM2->ARR = (uint16_t) (ms - 1) * 10;
+
+  // Reset counter
+  TIM2->CNT = 0;
+
+  // Start timer
+  TIM2->CR1 |= TIM_CR1_CEN;
+
+  // Wait until counter reaches ARR
+  while(!(TIM2->SR & TIM_SR_UIF));
+
+  // Clear update flag
+  TIM2->SR &= ~TIM_SR_UIF;
+
+  // Stop timer
+  TIM2->CR1 &= ~TIM_CR1_CEN;
 }

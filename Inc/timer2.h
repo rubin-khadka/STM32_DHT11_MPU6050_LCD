@@ -11,6 +11,6 @@
 #include <stdint.h>
 
 void TIMER2_Init(void);
-void TIMER2_Delay_ms(uint32_t ms);
+void TIMER2_Delay_ms(uint16_t ms);
 
 #endif /* TIMER2_H_ */
