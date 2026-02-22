@@ -10,7 +10,6 @@
 #include "timer1.h"   // For DHT11 microsecond timing
 #include "timer2.h"   // For long delays between readings
 #include "dht11.h"
-#include "uart.h"
 #include "utils.h"
 #include "lcd.h"
 #include "mpu6050.h"
@@ -33,6 +32,7 @@ int main(void)
   LCD_Init();       // LCD for display
   MPU6050_Init();
   Button_Init();
+  TIMER4_Init();
 
   LCD_SendString("Button Test");
   LCD_SetCursor(1, 0);
