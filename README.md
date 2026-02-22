@@ -81,6 +81,9 @@ The LCD display and MPU6050 share the same I2C bus (PB8/SCL, PB9/SDA) with diffe
 **Note:** The LCD module uses a PCF8574 I2C backpack.
 
 ### Project Schematic
+<img width="1197" height="526" alt="Schematic_diagram" src="https://github.com/user-attachments/assets/eef5449f-f22e-4f18-beb8-1e8a7fe16d54" />
+
+*Schematic designed using EasyEDA*
 
 ## MPU6050 IMU Driver
 
