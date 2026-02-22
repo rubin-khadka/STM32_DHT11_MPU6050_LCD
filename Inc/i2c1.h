@@ -11,7 +11,7 @@
 // I2C Status codes
 #define I2C_OK       	0
 #define I2C_ERROR    	-1
-#define I2C_TIMEOUT   -2
+#define I2C_TIMEOUT     -2
 
 // I2C Read/Write flags
 #define I2C_WRITE       0
