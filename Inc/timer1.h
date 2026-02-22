@@ -1,8 +1,8 @@
 /**
-  * @file    timer1.h
-  * @brief   Timer1 module with polling-based delays
-  * @author  Rubin Khadka
-  */
+ * @file    timer1.h
+ * @brief   Timer1 module with polling-based delays
+ * @author  Rubin Khadka
+ */
 
 #ifndef TIMER1_H
 #define TIMER1_H

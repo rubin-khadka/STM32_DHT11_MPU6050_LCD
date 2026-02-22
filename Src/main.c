@@ -16,6 +16,7 @@
 #include "button.h"
 #include "uart.h"
 #include "tasks.h"
+#include "timer3.h"
 
 int main(void)
 {
@@ -31,37 +32,54 @@ int main(void)
   Button_Init();
   TIMER4_Init();
 
-  LCD_SendString("Button Test");
+  // Loop counters
+  uint8_t dht_count = 0;
+  uint8_t mpu_count = 0;
+  uint8_t lcd_count = 0;
+  uint8_t uart_count = 0;
+
+  LCD_Clear();
+  LCD_SendString("STM32 PROJECT");
   LCD_SetCursor(1, 0);
-  LCD_SendString("Mode: Temp/Hum");
+  LCD_SendString("INITIALIZING...");
+
+  TIMER2_Delay_ms(2000);
+
+  // Setup TIM3 for 10ms control loop
+  TIMER3_SetupPeriod(10);  // 10ms period
 
   while(1)
   {
-    // Just show current mode on LCD
-    LCD_SetCursor(1, 6);  // Position after "Mode: "
+    // Run tasks at different rates
 
-    switch(Button_GetMode())
+    // DHT11 every 1 seconds
+    if(dht_count++ >= 100)
     {
-      case DISPLAY_MODE_TEMP_HUM:
-        Task_DHT11_Read();
-        Task_LCD_Update();
-        Task_UART_Output();
-        break;
-      case DISPLAY_MODE_ACCEL:
-        Task_MPU6050_Read();
-        Task_LCD_Update();
-        Task_UART_Output();
-        break;
-      case DISPLAY_MODE_GYRO:
-        Task_MPU6050_Read();
-        Task_LCD_Update();
-        Task_UART_Output();
-        break;
-      default:
-        break;
+      Task_DHT11_Read();
+      dht_count = 0;
     }
 
-    // Small delay to prevent LCD flicker
-    for(volatile uint32_t i = 0; i < 720000; i++);
+    // MPU6050 every 50ms
+    if(mpu_count++ >= 5)
+    {
+      Task_MPU6050_Read();
+      mpu_count = 0;
+    }
+
+    // LCD update every 100ms
+    if(lcd_count++ >= 10)
+    {
+      Task_LCD_Update();
+      lcd_count = 0;
+    }
+
+    // UART output every 100ms
+    if(uart_count++ >= 10)
+    {
+      Task_UART_Output();
+      uart_count = 0;
+    }
+
+    TIMER3_WaitPeriod();
   }
 }

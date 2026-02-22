@@ -79,14 +79,6 @@ uint8_t MPU6050_Init(void)
     return I2C_ERROR;
   }
 
-  USART1_SendString("WHO_AM_I = 0x");
-  // Convert to hex and print
-  char hex[3];
-  hex[0] = (who_am_i >> 4) + ((who_am_i >> 4) > 9 ? 'A' - 10 : '0');
-  hex[1] = (who_am_i & 0x0F) + ((who_am_i & 0x0F) > 9 ? 'A' - 10 : '0');
-  hex[2] = '\0';
-  USART1_SendString(hex);
-
   if(who_am_i != 0x68)
   {
     USART1_SendString("Wrong device ID!\r\n");

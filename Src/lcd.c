@@ -205,13 +205,15 @@ void LCD_DisplayAccel(int16_t ax, int16_t ay, int16_t az)
 {
   char buf[8];
 
-  LCD_Clear();
-
   // Line 1: AX and AY
   LCD_SetCursor(0, 0);
   LCD_SendString("AX:");
   itoa_16(ax, buf);
   LCD_SendString(buf);
+  LCD_SendData(' ');
+  LCD_SendData(' ');
+  LCD_SendData(' ');
+  LCD_SendData(' ');
 
   LCD_SetCursor(0, 8);
   LCD_SendString(" AY:");
@@ -223,19 +225,25 @@ void LCD_DisplayAccel(int16_t ax, int16_t ay, int16_t az)
   LCD_SendString("AZ:");
   itoa_16(az, buf);
   LCD_SendString(buf);
+  LCD_SendData(' ');
+  LCD_SendData(' ');
+  LCD_SendData(' ');
+  LCD_SendData(' ');
 }
 
 void LCD_DisplayGyro(int16_t gx, int16_t gy, int16_t gz)
 {
   char buf[8];
 
-  LCD_Clear();
-
   // Line 1: GX and GY
   LCD_SetCursor(0, 0);
   LCD_SendString("GX:");
   itoa_16(gx, buf);
   LCD_SendString(buf);
+  LCD_SendData(' ');
+  LCD_SendData(' ');
+  LCD_SendData(' ');
+  LCD_SendData(' ');
 
   LCD_SetCursor(0, 8);
   LCD_SendString(" GY:");
@@ -247,4 +255,8 @@ void LCD_DisplayGyro(int16_t gx, int16_t gy, int16_t gz)
   LCD_SendString("GZ:");
   itoa_16(gz, buf);
   LCD_SendString(buf);
+  LCD_SendData(' ');
+  LCD_SendData(' ');
+  LCD_SendData(' ');
+  LCD_SendData(' ');
 }
