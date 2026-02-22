@@ -14,11 +14,8 @@
 #include "lcd.h"
 #include "mpu6050.h"
 #include "button.h"
-
-#define MAX_RETRIES 5
-
-// Buffer for UART output
-char output_buff[64];
+#include "uart.h"
+#include "tasks.h"
 
 int main(void)
 {
@@ -46,13 +43,21 @@ int main(void)
     switch(Button_GetMode())
     {
       case DISPLAY_MODE_TEMP_HUM:
-        LCD_SendString("Temp/Hum  ");
+        Task_DHT11_Read();
+        Task_LCD_Update();
+        Task_UART_Output();
         break;
       case DISPLAY_MODE_ACCEL:
-        LCD_SendString("Accel     ");
+        Task_MPU6050_Read();
+        Task_LCD_Update();
+        Task_UART_Output();
         break;
       case DISPLAY_MODE_GYRO:
-        LCD_SendString("Gyro      ");
+        Task_MPU6050_Read();
+        Task_LCD_Update();
+        Task_UART_Output();
+        break;
+      default:
         break;
     }
 

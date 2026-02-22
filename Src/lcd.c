@@ -7,6 +7,7 @@
 
 #include "lcd.h"
 #include "timer2.h"  // For delays
+#include "utils.h"
 
 // PCF8574 bits
 #define LCD_BACKLIGHT   0x08
@@ -124,7 +125,7 @@ void LCD_SetCursor(uint8_t row, uint8_t col)
   LCD_SendCmd(address);
 }
 
-void LCD_DisplayReading(uint32_t count, uint8_t temp_int, uint8_t temp_dec, uint8_t hum_int, uint8_t hum_dec)
+void LCD_DisplayReading(uint8_t temp_int, uint8_t temp_dec, uint8_t hum_int, uint8_t hum_dec)
 {
 
   // LINE 1: TEMP: XX.X C
@@ -147,6 +148,10 @@ void LCD_DisplayReading(uint32_t count, uint8_t temp_int, uint8_t temp_dec, uint
   LCD_SendData('0' + temp_dec);
   LCD_SendData(' ');
   LCD_SendData('C');
+  LCD_SendData(' ');
+  LCD_SendData(' ');
+  LCD_SendData(' ');
+  LCD_SendData(' ');
 
   // LINE 2: HUMD: XX.X %
   LCD_SetCursor(1, 0);
@@ -194,4 +199,52 @@ void LCD_DisplayHeader(void)
   LCD_SendString("DHT11 Sensor");
   LCD_SetCursor(1, 0);
   LCD_SendString("Initializing...");
+}
+
+void LCD_DisplayAccel(int16_t ax, int16_t ay, int16_t az)
+{
+  char buf[8];
+
+  LCD_Clear();
+
+  // Line 1: AX and AY
+  LCD_SetCursor(0, 0);
+  LCD_SendString("AX:");
+  itoa_16(ax, buf);
+  LCD_SendString(buf);
+
+  LCD_SetCursor(0, 8);
+  LCD_SendString(" AY:");
+  itoa_16(ay, buf);
+  LCD_SendString(buf);
+
+  // Line 2: AZ
+  LCD_SetCursor(1, 0);
+  LCD_SendString("AZ:");
+  itoa_16(az, buf);
+  LCD_SendString(buf);
+}
+
+void LCD_DisplayGyro(int16_t gx, int16_t gy, int16_t gz)
+{
+  char buf[8];
+
+  LCD_Clear();
+
+  // Line 1: GX and GY
+  LCD_SetCursor(0, 0);
+  LCD_SendString("GX:");
+  itoa_16(gx, buf);
+  LCD_SendString(buf);
+
+  LCD_SetCursor(0, 8);
+  LCD_SendString(" GY:");
+  itoa_16(gy, buf);
+  LCD_SendString(buf);
+
+  // Line 2: GZ
+  LCD_SetCursor(1, 0);
+  LCD_SendString("GZ:");
+  itoa_16(gz, buf);
+  LCD_SendString(buf);
 }

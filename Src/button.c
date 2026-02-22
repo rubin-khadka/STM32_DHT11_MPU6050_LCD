@@ -40,7 +40,6 @@ void Button_Init(void)
   EXTI->IMR |= EXTI_IMR_MR0;
 
   NVIC_EnableIRQ(EXTI0_IRQn);
-  // NVIC_SetPriority(EXTI0_IRQn, 0);  // Highest priority
 }
 
 DisplayMode_t Button_GetMode(void)
@@ -84,8 +83,8 @@ void TIMER4_Init(void)
   for(volatile int i = 0; i < 10; i++);
 
   // Configure for 0.1ms resolution at 72MHz
-  TIM4->PSC = 7200 - 1;   // Prescaler = 7199
-  TIM4->ARR = 500 - 1;     // 500 ticks = 50ms
+  TIM4->PSC = 7200 - 1;     // Prescaler = 7199
+  TIM4->ARR = 500 - 1;      // 500 ticks = 50ms
 
   // Enable interrupt
   TIM4->DIER |= TIM_DIER_UIE;
@@ -105,36 +104,29 @@ void EXTI0_IRQHandler(void)
 {
   if(EXTI->PR & EXTI_PR_PR0)
   {
-    USART1_SendString("EXTI triggered\r\n");  // DEBUG
-
     EXTI->IMR &= ~EXTI_IMR_MR0;
     EXTI->PR |= EXTI_PR_PR0;
 
     TIM4->CNT = 0;
     TIM4->SR &= ~TIM_SR_UIF;
     TIM4->CR1 |= TIM_CR1_CEN;
-    USART1_SendString("TIM4 started\r\n");    // DEBUG
   }
 }
 
 void TIM4_IRQHandler(void)
 {
-  USART1_SendString("TIM4 IRQ entered\r\n");  // DEBUG
-
   if(TIM4->SR & TIM_SR_UIF)
   {
-    USART1_SendString("TIM4 UIF set\r\n");    // DEBUG
 
     TIM4->CR1 &= ~TIM_CR1_CEN;
 
     if(!(GPIOA->IDR & GPIO_IDR_IDR0))
     {
-      USART1_SendString("Button still pressed\r\n");  // DEBUG
       Button_NextMode();
     }
     else
     {
-      USART1_SendString("Button released\r\n");  // DEBUG
+      // Do Nothing
     }
 
     EXTI->IMR |= EXTI_IMR_MR0;

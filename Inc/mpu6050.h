@@ -47,6 +47,8 @@ typedef struct
   int16_t gyro_z;
 } MPU6050_Data_t;
 
+extern volatile MPU6050_Data_t mpu6050_data;
+
 // Function prototypes
 uint8_t MPU6050_Init(void);
 uint8_t MPU6050_ReadAll(MPU6050_Data_t *data);

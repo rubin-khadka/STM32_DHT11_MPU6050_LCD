@@ -8,8 +8,6 @@
 #ifndef GPIO_H_
 #define GPIO_H_
 
-#include "stdint.h"
-
 void LED_Init(void);
 void LED_ON(void);
 void LED_OFF(void);

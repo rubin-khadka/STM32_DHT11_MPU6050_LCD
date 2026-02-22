@@ -10,6 +10,8 @@
 #include "uart.h"
 #include "timer2.h"
 
+volatile MPU6050_Data_t mpu6050_data;
+
 // Read a single register from MPU6050
 static uint8_t MPU6050_ReadReg(uint8_t reg, uint8_t *data)
 {

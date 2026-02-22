@@ -86,29 +86,11 @@ void format_value(uint8_t integer, uint8_t decimal, char *buffer, char unit)
   *ptr = '\0';
 }
 
-void format_reading(uint32_t count, uint8_t temp_int, uint8_t temp_dec, uint8_t hum_int, uint8_t hum_dec, char *buffer)
+void format_reading(uint8_t temp_int, uint8_t temp_dec, uint8_t hum_int, uint8_t hum_dec, char *buffer)
 {
   char *ptr = buffer;
   char temp[8];
   uint8_t i;
-
-  // Add '['
-  *ptr++ = '[';
-
-  // Convert count to string (up to 5 digits)
-  if(count >= 10000)
-    *ptr++ = '0' + (count / 10000) % 10;
-  if(count >= 1000)
-    *ptr++ = '0' + (count / 1000) % 10;
-  if(count >= 100)
-    *ptr++ = '0' + (count / 100) % 10;
-  if(count >= 10)
-    *ptr++ = '0' + (count / 10) % 10;
-  *ptr++ = '0' + (count % 10);
-
-  // Add '] '
-  *ptr++ = ']';
-  *ptr++ = ' ';
 
   // Add "Temp: "
   *ptr++ = 'T';
@@ -144,6 +126,115 @@ void format_reading(uint32_t count, uint8_t temp_int, uint8_t temp_dec, uint8_t 
   }
 
   // Add newline
+  *ptr++ = '\r';
+  *ptr++ = '\n';
+  *ptr = '\0';
+}
+
+void format_temp_hum(char *buffer, uint8_t temp, uint8_t hum)
+{
+  char *ptr = buffer;
+
+  // "T:24C H:45%"
+  *ptr++ = 'T';
+  *ptr++ = ':';
+
+  // Temperature (1-2 digits)
+  if(temp >= 10)
+    *ptr++ = '0' + (temp / 10);
+  *ptr++ = '0' + (temp % 10);
+
+  *ptr++ = 'C';
+  *ptr++ = ' ';
+  *ptr++ = 'H';
+  *ptr++ = ':';
+
+  // Humidity (1-2 digits)
+  if(hum >= 10)
+    *ptr++ = '0' + (hum / 10);
+  *ptr++ = '0' + (hum % 10);
+
+  *ptr++ = '%';
+  *ptr++ = '\r';
+  *ptr++ = '\n';
+  *ptr = '\0';
+}
+
+void format_accel(char *buffer, int16_t ax, int16_t ay, int16_t az)
+{
+  char *ptr = buffer;
+  char num[8];
+
+  // "AX:123 AY:456 AZ:789"
+
+  // AX
+  *ptr++ = 'A';
+  *ptr++ = 'X';
+  *ptr++ = ':';
+  itoa_16(ax, num);
+  for(char *s = num; *s; s++)
+    *ptr++ = *s;
+
+  *ptr++ = ' ';
+
+  // AY
+  *ptr++ = 'A';
+  *ptr++ = 'Y';
+  *ptr++ = ':';
+  itoa_16(ay, num);
+  for(char *s = num; *s; s++)
+    *ptr++ = *s;
+
+  *ptr++ = ' ';
+
+  // AZ
+  *ptr++ = 'A';
+  *ptr++ = 'Z';
+  *ptr++ = ':';
+  itoa_16(az, num);
+  for(char *s = num; *s; s++)
+    *ptr++ = *s;
+
+  *ptr++ = '\r';
+  *ptr++ = '\n';
+  *ptr = '\0';
+}
+
+void format_gyro(char *buffer, int16_t gx, int16_t gy, int16_t gz)
+{
+  char *ptr = buffer;
+  char num[8];
+
+  // "GX:123 GY:456 GZ:789"
+
+  // GX
+  *ptr++ = 'G';
+  *ptr++ = 'X';
+  *ptr++ = ':';
+  itoa_16(gx, num);
+  for(char *s = num; *s; s++)
+    *ptr++ = *s;
+
+  *ptr++ = ' ';
+
+  // GY
+  *ptr++ = 'G';
+  *ptr++ = 'Y';
+  *ptr++ = ':';
+  itoa_16(gy, num);
+  for(char *s = num; *s; s++)
+    *ptr++ = *s;
+
+  *ptr++ = ' ';
+
+  // GZ
+  *ptr++ = 'G';
+  *ptr++ = 'Z';
+  *ptr++ = ':';
+  itoa_16(gz, num);
+  for(char *s = num; *s; s++)
+    *ptr++ = *s;
+
   *ptr++ = '\r';
   *ptr++ = '\n';
   *ptr = '\0';
