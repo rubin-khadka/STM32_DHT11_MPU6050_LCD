@@ -6,9 +6,17 @@
 
 ## Video Demonstrations
 
+**Hardware Demo** 
+
 https://github.com/user-attachments/assets/e8429c52-7080-4330-a7c4-9600e6ef411d
 
+**UART Output**  
+
 https://github.com/user-attachments/assets/36aa9a49-7e9d-4ebb-aacc-f32500a67af0
+
+When the button is pressed, the display mode cycles through different options. The UART output changes to match the currently selected mode on the LCD.
+
+**Note:** The accelerometer and gyroscope values show significant variation because they are **raw, unfiltered data** directly from the MPU6050 registers. No smoothing or sensor fusion algorithms have been applied, which is why you see the natural noise and sensitivity of the sensors.
 
 ## Project Overview
 
@@ -241,6 +249,10 @@ git clone https://github.com/rubin-khadka/STM32_DHT11_MPU6050_LCD.git
     - Build: `Ctrl+B`
     - Debug: `F11`
     - Run: `F8` (Resume)
+
+## Related Projects 
+- [STM32_DHT11_UART_BareMetal](https://github.com/rubin-khadka/STM32_DHT11_UART_BareMetal)
+- [STM32_DHT11_LCD16x2](https://github.com/rubin-khadka/STM32_DHT11_LCD16x2)
 
 ## Resources
 - [STM32F103 Datasheet](https://www.st.com/resource/en/datasheet/stm32f103c8.pdf)
