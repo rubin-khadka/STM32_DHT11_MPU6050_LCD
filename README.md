@@ -6,6 +6,9 @@
 
 ## Video Demonstrations
 
+https://github.com/user-attachments/assets/e8429c52-7080-4330-a7c4-9600e6ef411d
+
+https://github.com/user-attachments/assets/36aa9a49-7e9d-4ebb-aacc-f32500a67af0
 
 ## Project Overview
 
@@ -17,7 +20,7 @@ This project demonstrates **complete bare-metal programming** on the STM32F103C8
 |-----------|-------------|
 | **STM32F103C8T6** | "Blue Pill" development board | 
 | **DHT11 Sensor** | Temperature & Humidity sensor | 
-| **MPU6050 Sensor** | 6-axis motion tracking device | 
+| **MPU6050 Sensor** | 6-axis inertial measurement unit | 
 | **LCD 16x2 with I2C** | Character display module | 
 | **USB-to-Serial Converter** | CP2102 / CH340 / FTDI |
 | **Push Button** | Two Leg Tactile switch | 
@@ -192,7 +195,7 @@ Instead of using `sprintf()` (which is computationally heavy and increases code 
 
 | Function | Purpose | Display Example |
 |----------|---------|-----------------|
-| `LCD_DisplayReading()` | Shows temperature & humidity on LCD | Line1: `Temp: 24.5 C`<br>Line2: `Hum: 45.0 %` |
+| `LCD_DisplayReading()` | Shows temperature & humidity on LCD | Line1: `TEMP: 24.5 C`<br>Line2: `HUMD: 45.0 %` |
 | `LCD_DisplayAccel()` | Shows accelerometer data on LCD | Line1: `AX:123 AY:456`<br>Line2: `AZ:789` |
 | `LCD_DisplayGyro()` | Shows gyroscope data on LCD | Line1: `GX:123 GY:456`<br>Line2: `GZ:789` |
 
