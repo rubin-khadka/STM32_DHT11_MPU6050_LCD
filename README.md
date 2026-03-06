@@ -268,5 +268,5 @@ git clone https://github.com/rubin-khadka/STM32_DHT11_MPU6050_LCD.git
 
 ## Contact
 **Rubin Khadka Chhetri**  
-📧 rubin.khadka84@gmail.com <br>
+📧 rubinkhadka84@gmail.com <br>
 🐙 GitHub: https://github.com/rubin-khadka
